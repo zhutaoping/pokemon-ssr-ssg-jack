@@ -6,7 +6,29 @@ import Link from "next/link";
 
 import styles from "../../styles/Details.module.css";
 
-export const getServerSideProps = async ({ params }) => {
+export const getStaticPaths = async () => {
+	const res = await fetch("https://pokeapi.co/api/v2/pokemon/");
+	const data = await res.json();
+
+	const pokemonData = await Promise.all(
+		data.results.map(async (da) => {
+			const res2 = await fetch(da.url);
+			const data2 = await res2.json();
+			return data2;
+		})
+	);
+
+	return {
+		paths: pokemonData.map((pokemon) => ({
+			params: {
+				id: pokemon.id.toString(),
+			},
+		})),
+		fallback: false,
+	};
+};
+
+export const getStaticProps = async ({ params }) => {
 	const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.id}`);
 
 	return {

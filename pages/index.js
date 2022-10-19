@@ -4,16 +4,14 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import styles from "../styles/Home.module.css";
 
-export const getServerSideProps = async () => {
+export const getStaticProps = async () => {
 	const res = await fetch("https://pokeapi.co/api/v2/pokemon/");
 	const data = await res.json();
 
 	const pokemonData = await Promise.all(
 		data.results.map(async (da) => {
 			const res2 = await fetch(da.url);
-			// console.log(res2);
 			const data2 = await res2.json();
-			// console.log(data2);
 			return data2;
 		})
 	);
@@ -53,7 +51,7 @@ export default function Home({ pokemon }) {
 			<Head>
 				<title>Pokemon List</title>
 			</Head>
-			<h2>SSR</h2>
+			<h2>SSG</h2>
 			<div className={styles.grid}>
 				{pokemon.map((pokemon) => (
 					<div className={styles.card} key={pokemon.id}>
