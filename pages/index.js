@@ -20,6 +20,7 @@ export const getStaticProps = async () => {
 		props: {
 			pokemon: pokemonData,
 		},
+		revalidate: 30,
 	};
 };
 
