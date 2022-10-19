@@ -1,32 +1,41 @@
 /* eslint-disable @next/next/no-img-element */
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import Head from "next/head";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 import styles from "../../styles/Details.module.css";
 
-const Details = () => {
-	const {
-		query: { id },
-	} = useRouter();
+export const getServerSideProps = async ({ params }) => {
+	const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${params.id}`);
 
-	const [pokemon, setPokemon] = useState(null);
+	return {
+		props: {
+			pokemon: await res.json(),
+		},
+	};
+};
 
-	useEffect(() => {
-		async function getPokemon() {
-			console.log("test");
-			const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-			const data = await res.json();
-			setPokemon(data);
-		}
-		if (id) getPokemon();
-	}, [id]);
+const Details = ({ pokemon }) => {
+	// const {
+	// 	query: { id },
+	// } = useRouter();
 
-	if (!pokemon) {
-		return null;
-		s;
-	}
+	// const [pokemon, setPokemon] = useState(null);
+
+	// useEffect(() => {
+	// 	async function getPokemon() {
+	// 		const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+	// 		const data = await res.json();
+	// 		setPokemon(data);
+	// 	}
+	// 	if (id) getPokemon();
+	// }, [id]);
+
+	// if (!pokemon) {
+	// 	return null;
+	// 	s;
+	// }
 
 	return (
 		<div>
