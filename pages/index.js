@@ -53,7 +53,7 @@ export default function Home({ pokemon }) {
 			<Head>
 				<title>Pokemon List</title>
 			</Head>
-			<h2>Pokemon List 2</h2>
+			<h2>SSR</h2>
 			<div className={styles.grid}>
 				{pokemon.map((pokemon) => (
 					<div className={styles.card} key={pokemon.id}>
